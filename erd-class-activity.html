@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Greetings CSI3450 Database Management and Design</title>
+  <!--
+      Mermaid documentation:
+     https://mermaid.js.org/syntax/entityRelationshipDiagram.html
+  -->
+ 
+  <!-- Load Mermaid CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.css">
+
+  <link rel="stylesheet" href="css/diag.css">
+
+</head>
+<body>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'
+  </script>  
+
+  <!-- Initialize Mermaid -->
+  <script>
+    // Use the 'mermaid' global object to initialize the diagram
+    mermaid.initialize({
+      startOnLoad: true,
+      sequence: { showSequenceNumbers: true },
+    });
+</script>
+
+<section>
+
+<h1 style="text-align: center;">Case 13</h1>
+
+
+
+<!--
+Sample taken from DatabaseAnswers.org
+https://datamodels.databases.biz
+-->
+ 
+ <div class="mermaid" style="text-align: center">
+
+---
+title: Order example
+---
+erDiagram
+   
+    Candidate {
+        int name pk      
+        string dob
+        string prev_employment fk
+        string qualifications fk
+        string openings
+        string candidate_pool
+        string course_name fk
+    }
+
+    Company {
+        string name fk
+        string position pk
+    }
+
+    Opening {
+      int opening_number pk
+      string company_name
+      string qualifications fk
+      string starting_date
+      string ending_date
+      string hourly_pay
+      string position fk
+    }
+
+    Qualification {
+      string course_name fk
+      string course_requirement
+      string course_avaliablity
+      string candidate_pool
+      string prereq pk
+      string qualifications pk
+    }
+
+    Job_History {
+      int prev_employment pk
+      string job_details
+      string opening_number fk
+    }
+
+    Placement {
+      int opening_number fk
+      string candidate_number
+      string total_hours
+    }
+
+    Course {
+      int prereq fk
+      string qualifications
+      string course_name pk
+      string course_description
+      string session_time fk
+    }
+
+    Session {
+      int session_time pk
+      string course_name fk
+      string scheduled
+      string fees
+      string seats
+    }
+
+    CAND_QUAL {
+      string qualifications pk, fk
+      string candidate_pool pk, fk
+    }
+
+      Candidate ||--o{ Job_History : has
+      Candidate ||--o{ Qualification : has
+      Company ||--o{ Candidate : request
+      Course ||--o{ Session : has
+      Opening ||--|| Qualification : requires
+      Opening }o--o{ Candidate : advises
+      Candidate ||--o{ Course : takes
+      Opening ||--|| Placement : becomes
+      Opening ||--|{ Job_History : added_to
+      Qualification ||--o{ Course : devoloped_by
+      Course }|--o{ Qualification : needs
+      CAND_QUAL ||--|{ Qualification : has
+      CAND_QUAL ||--|{ Candidate : has
+     
+</div>
+ 
+<br>
+
+
+
+ <div class="mermaid" style="text-align: center">
+sequenceDiagram
+   
+
+
+</div>
+
+
+ 
+</section>
+
+</body>
+</html>
