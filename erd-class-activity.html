@@ -55,21 +55,24 @@ erDiagram
         string openings
         string candidate_pool
         string course_name fk
+        string candidate_id
     }
 
     Company {
         string name fk
         string position pk
+        string company_id
     }
 
     Opening {
       int opening_number pk
-      string company_name
-      string qualifications fk
+      string company_id
+      string required_qualification_id fk
       string starting_date
       string ending_date
       string hourly_pay
       string position fk
+    
     }
 
     Qualification {
@@ -78,40 +81,48 @@ erDiagram
       string course_avaliablity
       string candidate_pool
       string prereq pk
-      string qualifications pk
+      string qualification_id pk
+      string code
     }
 
     Job_History {
-      int prev_employment pk
+      int job_history_id pk
       string job_details
-      string opening_number fk
+      string opening_id fk
+      string candidate_id
     }
 
     Placement {
-      int opening_number fk
-      string candidate_number
-      string total_hours
+      int opening_id fk
+      string candidate_id
+      string total_hours_worked
+      string placement_id
     }
 
     Course {
       int prereq fk
-      string qualifications
+      string qualification_id
       string course_name pk
       string course_description
       string session_time fk
     }
 
     Session {
-      int session_time pk
-      string course_name fk
-      string scheduled
+      int session_id pk
+      string course_id fk
+      string date
       string fees
       string seats
     }
 
     CAND_QUAL {
-      string qualifications pk, fk
-      string candidate_pool pk, fk
+      string qualification_id pk, fk
+      string candidate_id pk, fk
+    }
+
+    CAND_SESS {
+      string candidate_id pk, fk
+      string session_id pk, fk
     }
 
       Candidate ||--o{ Job_History : has
@@ -127,7 +138,8 @@ erDiagram
       Course }|--o{ Qualification : needs
       CAND_QUAL ||--|{ Qualification : has
       CAND_QUAL ||--|{ Candidate : has
-     
+      CAND_SESS ||--|{ Session : has
+      CAND_SESS ||--|{ Candidate : has     
 </div>
  
 <br>
